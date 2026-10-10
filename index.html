@@ -149,24 +149,22 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 }
 
 /* ============================================================
-   BRAND MARK — support foto custom 1:1
+   BRAND MARK — Logo tanpa background, dengan glow kuning mewah
    ============================================================ */
 .brand-mark{
   width:56px;height:56px;
   margin:0 auto 16px;
-  border-radius:16px;
-  background:linear-gradient(135deg,var(--gold),var(--bright-gold));
+  background:transparent;
   color:#0A1729;
   font-family: var(--font-ui);
   font-weight:800;
   font-size:15px;
   letter-spacing:.02em;
-  box-shadow:0 12px 30px rgba(217,164,65,.4);
   position:relative;
   z-index:1;
   flex-shrink:0;
   aspect-ratio: 1 / 1;
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   place-items: center;
   padding: 0;
@@ -181,17 +179,41 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .brand-mark img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
-  border-radius: inherit;
-  position: absolute;
-  inset: 0;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 12px rgba(244,201,93,0.55))
+          drop-shadow(0 0 24px rgba(217,164,65,0.35))
+          drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+  transition: filter .35s ease, transform .35s ease;
+}
+.brand-mark:hover img{
+  filter: drop-shadow(0 0 18px rgba(244,201,93,0.85))
+          drop-shadow(0 0 36px rgba(217,164,65,0.55))
+          drop-shadow(0 6px 16px rgba(0,0,0,0.5));
+  transform: scale(1.04);
+}
+.brand-mark::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(244,201,93,0.45) 0%, rgba(217,164,65,0.18) 35%, transparent 70%);
+  z-index: 0;
+  pointer-events:none;
+  animation: brandGlow 3.5s ease-in-out infinite;
+}
+@keyframes brandGlow{
+  0%,100%{ opacity:.75; transform:scale(1); }
+  50%    { opacity:1;   transform:scale(1.08); }
 }
 .brand-mark.has-image .brand-fallback{ display: none; }
 
-.brand-mark.small{width:40px;height:40px;font-size:11px;border-radius:11px;margin:0;box-shadow:0 6px 16px rgba(217,164,65,.35);flex-shrink:0}
-.brand-mark.light{background:linear-gradient(135deg,var(--bright-gold),var(--gold))}
+.brand-mark.small{width:40px;height:40px;font-size:11px;border-radius:0;margin:0;flex-shrink:0;overflow:visible}
+.brand-mark.small::before{ inset:-25%; }
+.brand-mark.light{background:transparent}
 
 .login-screen{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:16px;width:100%}
 .login-card{width:100%;max-width:400px;padding:32px 24px;border-radius:22px;background: var(--bg-card);border:1px solid var(--border);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color: var(--text);box-shadow:0 40px 90px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.05);text-align:center;position:relative;overflow:hidden;}
@@ -303,8 +325,8 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 [data-theme="light"] .wallet::after{background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.4) 45%, transparent 60%)}
 .wallet > *{position:relative;z-index:1}
 .wallet-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:18px;min-width:0;flex-wrap:nowrap}
-.wallet-brand-wrap{display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1;overflow:hidden}
-.wallet-top .brand-mark.small{width:38px;height:38px;font-size:11px;flex-shrink:0;box-shadow:0 8px 20px rgba(217,164,65,.45), 0 0 0 1px rgba(244,201,93,.3)}
+.wallet-brand-wrap{display:flex;gap:10px;align-items:center;min-width:0;flex:1;overflow:hidden}
+.wallet-top .brand-mark.small{width:40px;height:40px;font-size:11px;flex-shrink:0}
 .wallet-brand-wrap > div{min-width:0;overflow:hidden}
 .wallet-brand{font-size:11px;letter-spacing:.1em;font-weight:700;line-height:1.25;font-family:var(--font-ui);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color: var(--wallet-text);transition: color .3s ease}
 .wallet-type{font-size:9px;letter-spacing:.28em;color: var(--gold);margin-top:3px;font-family:var(--font-ui);font-weight:600}
@@ -1238,95 +1260,45 @@ input[type="range"]{width:100%;accent-color:var(--aqua)}
 
 <script>
 /* ============================================================
-   BRAND LOGO CUSTOM — SVG INLINE (PRESISI, TANPA URL EKSTERNAL)
+   BRAND LOGO CUSTOM — TANPA BACKGROUND, GLOW KUNING MEWAH
    ============================================================
-   Logo disimpan sebagai string SVG inline agar:
-   - Tidak bergantung pada koneksi internet
-   - Selalu tampil tajam di semua resolusi (vektor)
-   - Tidak berubah meski CDN/URL gambar mati
+   - Logo murni (tanpa kotak/kartu kuning di belakangnya)
+   - Ditambah efek glow kuning berlapis agar terkesan mewah
+   - Menggunakan gambar dari URL yang diberikan
    ============================================================ */
-const BRAND_LOGO_SVG = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;display:block;">
-  <!-- Background perisai kuning -->
-  <path d="M100 8
-           C132 8, 165 20, 180 42
-           C195 64, 198 96, 192 126
-           C185 158, 158 182, 100 196
-           C42 182, 15 158, 8 126
-           C2 96, 5 64, 20 42
-           C35 20, 68 8, 100 8 Z"
-        fill="#FFD24A" stroke="#FFFFFF" stroke-width="2.5"/>
-
-  <!-- Ornamen sudut putih (frame) -->
-  <path d="M100 20
-           C126 20, 152 30, 164 48
-           C176 66, 178 92, 174 118
-           C169 146, 145 166, 100 178
-           C55 166, 31 146, 26 118
-           C22 92, 24 66, 36 48
-           C48 30, 74 20, 100 20 Z"
-        fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.55"/>
-
-  <!-- Lengkung kubah + sinar -->
-  <path d="M78 62 Q100 44 122 62" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/>
-  <path d="M70 70 L78 62 L86 70" fill="none" stroke="#FFFFFF" stroke-width="2"/>
-  <path d="M114 70 L122 62 L130 70" fill="none" stroke="#FFFFFF" stroke-width="2"/>
-
-  <!-- Lingkaran putih tengah (background ilustrasi) -->
-  <circle cx="100" cy="118" r="46" fill="#FFFFFF"/>
-
-  <!-- Ilustrasi figur ibu + 2 anak (vektor sederhana, garis) -->
-  <!-- Ibu -->
-  <circle cx="100" cy="98" r="11" fill="none" stroke="#E8A227" stroke-width="2.6"/>
-  <path d="M89 122 Q100 108 111 122" fill="none" stroke="#E8A227" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M100 109 L100 130" stroke="#E8A227" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M90 118 L84 132" stroke="#E8A227" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M110 118 L116 132" stroke="#E8A227" stroke-width="2.6" stroke-linecap="round"/>
-
-  <!-- Anak kiri -->
-  <circle cx="80" cy="120" r="7" fill="none" stroke="#E8A227" stroke-width="2.2"/>
-  <path d="M74 132 Q80 126 86 132" fill="none" stroke="#E8A227" stroke-width="2.2" stroke-linecap="round"/>
-
-  <!-- Anak kanan -->
-  <circle cx="120" cy="120" r="7" fill="none" stroke="#E8A227" stroke-width="2.2"/>
-  <path d="M114 132 Q120 126 126 132" fill="none" stroke="#E8A227" stroke-width="2.2" stroke-linecap="round"/>
-
-  <!-- Lengkung pelukan (tangan ibu ke anak) -->
-  <path d="M88 124 Q100 132 112 124" fill="none" stroke="#E8A227" stroke-width="2.2" stroke-linecap="round"/>
-
-  <!-- Garis tanah / dasar -->
-  <path d="M62 148 L138 148" stroke="#E8A227" stroke-width="2.4" stroke-linecap="round"/>
-
-  <!-- Pita bawah -->
-  <path d="M22 158 Q100 190 178 158 L178 172 Q100 204 22 172 Z"
-        fill="#FFFFFF" stroke="#FFD24A" stroke-width="2"/>
-
-  <!-- Teks pita -->
-  <text x="100" y="176"
-        text-anchor="middle"
-        font-family="Arial, Helvetica, sans-serif"
-        font-size="8.5"
-        font-weight="bold"
-        fill="#D9A441"
-        letter-spacing="0.6">
-    YAYASAN PENDIDIKAN WASKITO
-  </text>
-</svg>
-`;
+const BRAND_LOGO_URL = "https://i.postimg.cc/3NPTkz9Q/design-modern-hd-2048x2048-(1).png";
 
 (function applyCustomLogo(){
+  if(!BRAND_LOGO_URL || !BRAND_LOGO_URL.trim()) return;
   const targets = ["#loginBrand", "#sidebarBrand", "#walletBrand"];
+
   targets.forEach(selector => {
     const el = document.querySelector(selector);
     if(!el) return;
     el.classList.add("has-image");
-    // Hapus fallback teks & gambar lama (jika ada)
+
+    // Hapus fallback teks
     const fallback = el.querySelector(".brand-fallback");
     if(fallback) fallback.style.display = "none";
+
+    // Hapus gambar lama (jika ada, untuk mencegah duplikat)
     const oldImg = el.querySelector("img");
     if(oldImg) oldImg.remove();
-    // Sisipkan SVG inline sebagai logo
-    el.insertAdjacentHTML("beforeend", BRAND_LOGO_SVG);
+
+    // Buat elemen gambar baru
+    const img = document.createElement("img");
+    img.src = BRAND_LOGO_URL;
+    img.alt = "Bank Mini Waskito Logo";
+    img.loading = "eager";
+    img.decoding = "async";
+    img.referrerPolicy = "no-referrer";
+    // Kalau gagal load, tampilkan fallback teks
+    img.onerror = () => {
+      el.classList.remove("has-image");
+      if(fallback) fallback.style.display = "";
+      console.warn("Logo gagal dimuat:", BRAND_LOGO_URL);
+    };
+    el.appendChild(img);
   });
 })();
 
