@@ -54,7 +54,6 @@
   --wallet-balance-glow: 0 2px 12px rgba(217,164,65,.3);
   --wallet-divider: rgba(255,255,255,.15);
 
-  /* Shadow logo di dark mode: FULL */
   --logo-shadow-1: 0 0 6px rgba(244,201,93,0.55);
   --logo-shadow-2: 0 0 14px rgba(217,164,65,0.35);
   --logo-shadow-3: 0 2px 6px rgba(0,0,0,0.35);
@@ -104,7 +103,6 @@
   --wallet-balance-glow: 0 2px 10px rgba(184,138,45,.25);
   --wallet-divider: rgba(16,42,67,.15);
 
-  /* Shadow logo di light mode: dikurangi jadi ~10% saja */
   --logo-shadow-1: 0 0 3px rgba(244,201,93,0.08);
   --logo-shadow-2: 0 0 6px rgba(217,164,65,0.05);
   --logo-shadow-3: 0 1px 2px rgba(0,0,0,0.06);
@@ -130,11 +128,6 @@
   --gap-inner: 14px;
 }
 
-/* ============================================================
-   ANTI-KONTAMINASI WARNA BROWSER HP
-   Mencegah Samsung Internet / Safari / Xiaomi / Vivo / Oppo / Realme
-   meng-override warna kita dengan auto-dark-mode atau auto-light-mode
-   ============================================================ */
 *, *::before, *::after{
   box-sizing: border-box;
   min-width: 0;
@@ -176,7 +169,6 @@ body{
   forced-color-adjust: none;
   -webkit-forced-color-adjust: none;
 }
-/* Cegah auto-dark-mode browser memodifikasi gambar/warna */
 img, svg, video, canvas{
   max-width:100%; height:auto; display:block;
   forced-color-adjust: none;
@@ -217,14 +209,14 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .small{font-size:12px}
 .gold{color:var(--gold)}
 
-.kpi-value, .wallet-balance, .wallet-name, .tl-amount,
+.kpi-value, .wallet-balance, .tl-amount,
 .countdown-cell span, .goal-current, .goal-target, .goal-pct,
 .rank-pts, .rank-num, .event-day, .podium-name, .reward-card h4,
 .wd-summary > div > div, .profile-grid > div > div,
 .qr-code, .tl-bal, .event-title, .goal-title,
 .streak-counter-num, .challenge-current, .challenge-pct,
 .exchange-from, .exchange-to {
-  font-family: var(--font-num);
+  font-family: var(--font-ui);
   font-weight: 500;
   letter-spacing: -0.01em;
   font-feature-settings: "tnum" 1, "lnum" 1;
@@ -354,7 +346,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .greeting{font-size:9px;letter-spacing:.18em;color:var(--text-soft);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--font-ui);display:block}
 
 /* ============================================================
-   MARQUEE WELCOME — Font UI + animasi slide billboard berulang
+   MARQUEE WELCOME — UPPERCASE, spasi, tanpa simbol
    ============================================================ */
 .topbar-title-wrap{
   position: relative;
@@ -366,17 +358,22 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 }
 .topbar-title{
   font-family: var(--font-ui);
-  font-size:clamp(19px, 5.5vw, 26px);
-  font-weight:500;
-  letter-spacing:-.01em;
+  font-size:clamp(15px, 4.2vw, 20px);
+  font-weight:600;
+  letter-spacing:.04em;
   white-space:nowrap;
   display:inline-block;
   min-width:0;
   color: var(--text);
-  line-height: 1.1;
+  line-height: 1.15;
   padding-right: 40px;
   will-change: transform;
-  animation: marqueeSlide 14s linear infinite;
+  animation: marqueeSlide 16s linear infinite;
+  text-transform: uppercase;
+}
+.topbar-title span{
+  display: inline-block;
+  padding-right: 32px;
 }
 .topbar-title-wrap:hover .topbar-title{
   animation-play-state: paused;
@@ -427,7 +424,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .wallet-top .brand-mark.small{width:40px;height:40px;font-size:11px;flex-shrink:0}
 
 /* ============================================================
-   FONT WALLET — Disamakan dengan font BALANCE (--font-ui)
+   WALLET TEXT — semua pakai font UI, nama kapital & lebih proporsional
    ============================================================ */
 .wallet-brand-wrap > div{min-width:0;overflow:hidden}
 .wallet-brand{
@@ -454,10 +451,11 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 [data-theme="dark"] .wallet-type{color:var(--bright-gold)}
 .wallet-name{
   font-family: var(--font-ui);
-  font-size:clamp(24px, 7vw, 30px);
-  letter-spacing:-.01em;
-  line-height:1;
-  font-weight:500;
+  font-size:clamp(17px, 4.6vw, 21px);
+  letter-spacing:.02em;
+  line-height:1.15;
+  font-weight:600;
+  text-transform: uppercase;
   text-shadow: var(--wallet-name-glow);
   min-width:0;
   overflow:hidden;
@@ -465,6 +463,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
   white-space:nowrap;
   color: var(--wallet-text);
   transition: color .3s ease;
+  margin-top:2px;
 }
 .wallet-points{
   font-family: var(--font-ui);
@@ -488,21 +487,24 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .wallet-label{font-family: var(--font-ui);font-size:8px;letter-spacing:.22em;opacity:.7;font-weight:600;color: var(--wallet-text-soft)}
 .wallet-balance{
   font-family: var(--font-ui);
-  font-size:clamp(22px, 6vw, 26px);
+  font-size:clamp(20px, 5.6vw, 26px);
   margin-top:3px;
   line-height:1;
-  font-weight:500;
+  font-weight:600;
   color: var(--gold);
   text-shadow: var(--wallet-balance-glow);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
   min-width:0;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
   transition: color .3s ease;
+  letter-spacing:-.01em;
 }
 [data-theme="dark"] .wallet-balance{color:var(--bright-gold)}
 [data-theme="light"] .wallet-balance{color: var(--gold)}
-.wallet-id{font-family: var(--font-ui);font-size:9px;letter-spacing:.14em;color: var(--wallet-id-color);white-space:nowrap;flex-shrink:0;transition: color .3s ease}
+.wallet-id{font-family: var(--font-ui);font-size:9px;letter-spacing:.14em;color: var(--wallet-id-color);white-space:nowrap;flex-shrink:0;transition: color .3s ease;font-variant-numeric: tabular-nums;}
 .wallet-foot{margin-top:14px;padding-top:12px;font-size:9px;letter-spacing:.06em;color: var(--wallet-foot);line-height:1.35;font-family:var(--font-ui);display:flex;align-items:center;gap:5px;min-width:0;transition: color .3s ease}
 .wallet-foot svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .wallet-foot span{min-width:0;overflow-wrap:anywhere}
@@ -523,7 +525,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 [data-theme="light"] .kpi.gold-accent .kpi-icon{background:linear-gradient(135deg, rgba(184,138,45,.15), rgba(217,164,65,.05));border-color: rgba(184,138,45,.35);color: var(--gold)}
 .kpi-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .kpi-label{font-size:8px;letter-spacing:.12em;color:var(--text-soft);font-weight:600;line-height:1.2;font-family:var(--font-ui);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.kpi-value{font-size:clamp(22px, 6vw, 28px);font-weight:500;line-height:1;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color: var(--text)}
+.kpi-value{font-size:clamp(20px, 5.6vw, 26px);font-weight:600;line-height:1;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color: var(--text);font-variant-numeric: tabular-nums;}
 .kpi.gold-accent .kpi-value{color:var(--gold)}
 .kpi-sub{font-size:9px;color:var(--text-soft);line-height:1.25;font-family:var(--font-ui);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:380px){.kpi{padding:14px;min-height:100px;gap:6px}.kpi-icon{width:24px;height:24px}.kpi-icon svg{width:12px;height:12px}.kpi-label{font-size:7px}.kpi-sub{font-size:8px}}
@@ -896,10 +898,10 @@ input[type="range"]{width:100%;accent-color:var(--aqua)}
 
 @media(max-width:360px){
   .kpi-value{font-size:19px}.kpi-icon{width:22px;height:22px}.kpi-icon svg{width:11px;height:11px}
-  .wallet{padding:18px 16px}.wallet-name{font-size:22px}.wallet-balance{font-size:20px}.wallet-badge{padding:3px 6px;font-size:7px}
+  .wallet{padding:18px 16px}.wallet-name{font-size:16px}.wallet-balance{font-size:20px}.wallet-badge{padding:3px 6px;font-size:7px}
   .icon-btn{width:32px;height:32px;border-radius:9px}.icon-btn svg{width:15px;height:15px}
   .avatar{width:32px;height:32px;font-size:12px}
-  .countdown-cell span{font-size:18px}.topbar-title{font-size:18px}.card{padding:16px}.btn-gold{padding:9px 12px;font-size:10px}
+  .countdown-cell span{font-size:18px}.topbar-title{font-size:14px}.card{padding:16px}.btn-gold{padding:9px 12px;font-size:10px}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -965,7 +967,7 @@ input[type="range"]{width:100%;accent-color:var(--aqua)}
         <div>
           <div class="greeting" id="greeting">GOOD EVENING</div>
           <div class="topbar-title-wrap">
-            <h1 class="topbar-title" id="userGreeting">Welcome back</h1>
+            <h1 class="topbar-title" id="userGreeting">WELCOME BACK</h1>
           </div>
         </div>
       </div>
@@ -1894,8 +1896,9 @@ function renderAll(){
   const greet = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   $("#greeting").textContent = greet.toUpperCase();
 
-  // Marquee: siapkan text duplikat agar animasi seamless berulang
-  const welcomeText = "Welcome back, " + u.username.charAt(0).toUpperCase() + u.username.slice(1) + "  •  ";
+  // Marquee: WELCOME BACK, NAMA — kapital & pakai spasi (tanpa simbol)
+  const nama = u.username.charAt(0).toUpperCase() + u.username.slice(1);
+  const welcomeText = "WELCOME BACK, " + nama + "   ";
   const titleEl = $("#userGreeting");
   if(titleEl){
     titleEl.innerHTML = `<span>${welcomeText}</span><span aria-hidden="true">${welcomeText}</span>`;
