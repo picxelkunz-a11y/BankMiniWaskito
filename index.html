@@ -148,14 +148,13 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-.login-screen{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:16px;width:100%}
-.login-card{width:100%;max-width:400px;padding:32px 24px;border-radius:22px;background: var(--bg-card);border:1px solid var(--border);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color: var(--text);box-shadow:0 40px 90px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.05);text-align:center;position:relative;overflow:hidden;}
-[data-theme="dark"] .login-card{color:#fff;box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05)}
-.login-card::before{content:"";position:absolute;top:-100px;right:-100px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle, rgba(57,184,200,.18), transparent 70%);pointer-events:none}
-.login-card::after{content:"";position:absolute;bottom:-120px;left:-120px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle, rgba(217,164,65,.14), transparent 70%);pointer-events:none}
+/* ============================================================
+   BRAND MARK — support foto custom 1:1
+   ============================================================ */
 .brand-mark{
-  width:56px;height:56px;margin:0 auto 16px;
-  display:grid;place-items:center;border-radius:16px;
+  width:56px;height:56px;
+  margin:0 auto 16px;
+  border-radius:16px;
   background:linear-gradient(135deg,var(--gold),var(--bright-gold));
   color:#0A1729;
   font-family: var(--font-ui);
@@ -163,11 +162,42 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
   font-size:15px;
   letter-spacing:.02em;
   box-shadow:0 12px 30px rgba(217,164,65,.4);
-  position:relative;z-index:1;
+  position:relative;
+  z-index:1;
+  flex-shrink:0;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.brand-mark .brand-fallback{
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
   padding-left: 2px;
 }
+.brand-mark img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: inherit;
+  position: absolute;
+  inset: 0;
+}
+.brand-mark.has-image .brand-fallback{ display: none; }
+
 .brand-mark.small{width:40px;height:40px;font-size:11px;border-radius:11px;margin:0;box-shadow:0 6px 16px rgba(217,164,65,.35);flex-shrink:0}
 .brand-mark.light{background:linear-gradient(135deg,var(--bright-gold),var(--gold))}
+
+.login-screen{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:16px;width:100%}
+.login-card{width:100%;max-width:400px;padding:32px 24px;border-radius:22px;background: var(--bg-card);border:1px solid var(--border);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color: var(--text);box-shadow:0 40px 90px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.05);text-align:center;position:relative;overflow:hidden;}
+[data-theme="dark"] .login-card{color:#fff;box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05)}
+.login-card::before{content:"";position:absolute;top:-100px;right:-100px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle, rgba(57,184,200,.18), transparent 70%);pointer-events:none}
+.login-card::after{content:"";position:absolute;bottom:-120px;left:-120px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle, rgba(217,164,65,.14), transparent 70%);pointer-events:none}
 .brand-title{
   font-size:clamp(22px, 7vw, 28px);
   letter-spacing:-0.01em;
@@ -608,17 +638,41 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 [data-theme="dark"] .modal-card input[type="text"],[data-theme="dark"] .modal-card input[type="number"],[data-theme="dark"] .modal-card input[type="date"],[data-theme="dark"] .modal-card input[type="tel"],[data-theme="dark"] .modal-card select{background:rgba(0,0,0,.25);border-color: rgba(143,227,232,.16)}
 .modal-card input:focus,.modal-card select:focus{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(57,184,200,.15);background:var(--bg-elev-2)}
 [data-theme="dark"] .modal-card input:focus,[data-theme="dark"] .modal-card select:focus{background:rgba(0,0,0,.35)}
-.modal-card input[type="number"]{font-family:var(--font-num);font-size:20px;letter-spacing:-.01em;color:var(--gold);font-weight:500;}
-[data-theme="dark"] .modal-card input[type="number"]{color:var(--bright-gold)}
-.modal-card input[type="number"]::placeholder{color: var(--text-soft);opacity:.5;font-family:var(--font-ui);font-size:13px}
+
+.modal-card input[type="number"]{
+  font-family: var(--font-ui);
+  font-size: 15px;
+  letter-spacing: -0.005em;
+  color: var(--gold);
+  font-weight: 600;
+}
+[data-theme="dark"] .modal-card input[type="number"]{ color: var(--bright-gold); }
+.modal-card input[type="number"]::placeholder{
+  color: var(--text-soft);
+  opacity: .5;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 400;
+}
+
 .modal-close{position:absolute;top:14px;right:16px;background: var(--bg-elev-2);border:1px solid var(--border);width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:20px;color:var(--text-soft);line-height:1;padding:0;transition:.2s}
 [data-theme="dark"] .modal-close{background:rgba(255,255,255,.04)}
 .modal-close:hover{background:rgba(162,74,89,.15);color:var(--text)}
 .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
 .modal-actions .btn{padding:12px 20px;font-size:11px}
 .amount-preview{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:-8px;margin-bottom:16px;padding:11px 13px;border-radius:10px;background: rgba(57,184,200,.05);border:1px solid var(--border-soft);font-size:10px;font-family:var(--font-ui);color:var(--text-soft);min-width:0}
-.amount-preview strong{font-family:var(--font-num);font-weight:500;font-size:20px;color:var(--gold);letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis}
-[data-theme="dark"] .amount-preview strong{color:var(--bright-gold)}
+
+.amount-preview strong{
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--gold);
+  letter-spacing: -0.005em;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-theme="dark"] .amount-preview strong{ color: var(--bright-gold); }
 
 .pay-types{display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:8px}
 .pay-type{padding:14px 6px;border-radius:12px;border:1.5px solid var(--border);background: var(--bg-elev-2);cursor:pointer;text-align:center;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:var(--font-ui);color:var(--text-soft);min-width:0}
@@ -686,7 +740,7 @@ input[type="range"]{width:100%;accent-color:var(--aqua)}
 
 <section id="loginScreen" class="login-screen">
   <div class="login-card">
-    <div class="brand-mark">BMW</div>
+    <div class="brand-mark" id="loginBrand"><span class="brand-fallback">BMW</span></div>
     <h1 class="brand-title">Bank Mini Waskito</h1>
     <p class="brand-sub">SMART STUDENT SAVING SYSTEM</p>
     <h2 class="login-heading">Welcome to Your Financial Journey</h2>
@@ -702,7 +756,7 @@ input[type="range"]{width:100%;accent-color:var(--aqua)}
 <div id="app" class="app hidden">
   <aside class="sidebar" id="sidebar">
     <div class="side-brand">
-      <div class="brand-mark small">BMW</div>
+      <div class="brand-mark small" id="sidebarBrand"><span class="brand-fallback">BMW</span></div>
       <div><div class="side-title">Bank Mini</div><div class="side-sub">WASKITO</div></div>
     </div>
     <nav class="side-nav">
@@ -759,7 +813,7 @@ input[type="range"]{width:100%;accent-color:var(--aqua)}
       <div class="wallet">
         <div class="wallet-top">
           <div class="wallet-brand-wrap">
-            <div class="brand-mark small light">BMW</div>
+            <div class="brand-mark small light" id="walletBrand"><span class="brand-fallback">BMW</span></div>
             <div>
               <div class="wallet-brand">BANK MINI WASKITO</div>
               <div class="wallet-type">MEMBER</div>
@@ -1183,6 +1237,38 @@ input[type="range"]{width:100%;accent-color:var(--aqua)}
 <div id="toast" class="toast" aria-live="polite"></div>
 
 <script>
+/* ============================================================
+   BRAND LOGO CUSTOM
+   ============================================================ */
+const BRAND_LOGO_URL = "https://i.postimg.cc/QMhPCjQn/2291562b-15e7-479a-a8a4-15c1436fe571-DFE2C1F.png";
+
+(function applyCustomLogo(){
+  const logoUrl = (typeof BRAND_LOGO_URL !== "undefined" && BRAND_LOGO_URL) || "";
+  if(!logoUrl.trim()) return;
+
+  const targets = ["#loginBrand", "#sidebarBrand", "#walletBrand"];
+  const img = new Image();
+  img.onload = () => {
+    targets.forEach(selector => {
+      const el = document.querySelector(selector);
+      if(!el) return;
+      el.classList.add("has-image");
+      const old = el.querySelector("img");
+      if(old) old.remove();
+      const newImg = document.createElement("img");
+      newImg.src = logoUrl;
+      newImg.alt = "Bank Mini Waskito Logo";
+      newImg.loading = "eager";
+      newImg.decoding = "async";
+      el.appendChild(newImg);
+    });
+  };
+  img.onerror = () => {
+    console.warn("Logo gagal dimuat:", logoUrl, "— fallback ke BMW text.");
+  };
+  img.src = logoUrl;
+})();
+
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const fmtRp = n => "Rp" + Number(n||0).toLocaleString("id-ID");
